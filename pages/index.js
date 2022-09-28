@@ -1,7 +1,12 @@
 import React from "react";
+import Homepage from "./home/Homepage";
 
 const index = () => {
-  return <div className="bg-red-500 h-full w-full font-bold">this is mars</div>;
+  return (
+    <>
+      <Homepage />
+    </>
+  );
 };
 
 export default index;
