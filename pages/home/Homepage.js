@@ -1,13 +1,9 @@
 import React from "react";
-import Navbar from "../../components/Navbar";
-import Firstsection from "../../sections/first_section";
+import Firstsection from "../../sections/Home/Hero_section";
 
 const Homepage = () => {
   return (
-    <div className="bg-[#1D222A] text-white">
-      <Navbar />
-      sample
-      {/* 1st SECTION */}
+    <div>
       <Firstsection />
     </div>
   );

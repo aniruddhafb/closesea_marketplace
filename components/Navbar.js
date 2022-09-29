@@ -33,8 +33,6 @@ const Navbar = () => {
           <div className="flex space-x- font-bold text-gray-300 space-x-4 2xl:space-x-5 ">
             <a href="">Marketplace</a>
             <a href="">Ranking</a>
-            {/* <a href="">Write</a> */}
-            {/* <a href="">Read</a> */}
             <a href="">Blogs</a>
           </div>
           <div className="flex space-x- items-center space-x-3 2xl:space-x-5">
@@ -43,6 +41,7 @@ const Navbar = () => {
             <SunIcon className="h-6 w-6 2xl:h-10 2xl:w-10" />
             <UserCircleIcon className="h-6 w-6 2xl:h-10 2xl:w-10" />
           </div>
+
         </div>
 
         {/* MOBILE VIEW */}

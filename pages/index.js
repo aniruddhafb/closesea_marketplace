@@ -5,6 +5,7 @@ import Homepage from "./home/Homepage";
 const index = () => {
   return (
     <>
+      <Navbar />
       <Homepage />
     </>
   );
