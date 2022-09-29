@@ -6,6 +6,7 @@ const Homepage = () => {
   return (
     <div className="bg-[#1D222A] text-white">
       <Navbar />
+      sample
       {/* 1st SECTION */}
       <Firstsection />
     </div>
