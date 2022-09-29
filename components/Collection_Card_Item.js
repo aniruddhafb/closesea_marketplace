@@ -5,7 +5,7 @@ import Image from "next/image";
 const Collection_Card_Item = () => {
   return (
     <div className="my-10">
-      <div className=" rounded-2xl">
+      <div className=" rounded-2xl hover:shadow-3xl lg:p-4">
         {/* Image */}
         <div>
           <Image

@@ -3,6 +3,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/solid";
 import Collection_Card_Item from "../../components/Collection_Card_Item";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Pagination } from "swiper";
+
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/free-mode";
