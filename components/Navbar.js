@@ -15,7 +15,7 @@ const Navbar = () => {
         <div className="lg:w-1/5 ll:text-xl ll:w-1/4 2xl:text-3xl">
           CLOSE-SEA
         </div>
-        
+
         {/* LAPTOP VIEW */}
         <div className="hidden lg:flex justify-between w-full space-x-10 items-center 2xl:text-3xl 2xl:space-x-14">
           <div className="w-full p-2 rounded-2xl bg-gray-800 border border-gray-600 outline-none flex space-x-3 items-center 2xl:p-3">
@@ -32,7 +32,9 @@ const Navbar = () => {
           </div>
           <div className="flex space-x- font-bold text-gray-300 space-x-4 2xl:space-x-5 ">
             <a href="">Marketplace</a>
-            <a href="">Rankings</a>
+            <a href="">Ranking</a>
+            <a href="">Write</a>
+            <a href="">Read</a>
             <a href="">Blogs</a>
           </div>
           <div className="flex space-x- items-center space-x-3 2xl:space-x-5">
