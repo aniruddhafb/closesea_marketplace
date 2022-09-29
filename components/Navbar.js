@@ -41,6 +41,7 @@ const Navbar = () => {
             <SunIcon className="h-6 w-6 2xl:h-10 2xl:w-10" />
             <UserCircleIcon className="h-6 w-6 2xl:h-10 2xl:w-10" />
           </div>
+
         </div>
 
         {/* MOBILE VIEW */}
