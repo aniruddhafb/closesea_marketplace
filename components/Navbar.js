@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import {
   BellIcon,
@@ -6,9 +6,31 @@ import {
   Bars3Icon,
   SunIcon,
   UserCircleIcon,
+  WalletIcon,
+  ArrowLeftOnRectangleIcon,
 } from "@heroicons/react/24/solid";
+import { ethers } from "ethers";
 
 const Navbar = () => {
+  async function connectWallet() {
+    const { ethers } = require("ethers");
+    if (window.ethereum) {
+      try {
+        const accounts = window.ethereum.request({
+          method: "eth_requestAccounts",
+        });
+        setWalletConnected(!walletConnected);
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+      } catch (error) {
+        console.log("Error connecting metamask..");
+      }
+    } else {
+      console.log("metamask not detected");
+    }
+  }
+
+  const [walletConnected, setWalletConnected] = useState(false);
+
   return (
     <div>
       <div className="bg-[#0B0C0D] text-white h-[80px] flex items-center px-4 justify-between ">
@@ -35,14 +57,33 @@ const Navbar = () => {
           </div>
           <div className="flex font-bold text-gray-300 space-x-4 2xl:space-x-5 text-xl">
             <a href="">Marketplace</a>
-            <a href="">Ranking</a>
-            <a href="">Blogs</a>
+            <a href="">Rankings</a>
+            <a href="">Blog</a>
           </div>
-          <div className="flex space-x- items-center space-x-3 2xl:space-x-5">
-            <MagnifyingGlassIcon className="h-6 w-6 2xl:h-7 2xl:w-7" />
-            <ShoppingCartIcon className="h-6 w-6 2xl:h-7 2xl:w-7" />
-            <SunIcon className="h-6 w-6 2xl:h-7 2xl:w-7" />
-            <UserCircleIcon className="h-6 w-6 2xl:h-7 2xl:w-7" />
+          <div className="flex space-x- items-center space-x-3 2xl:space-x-5  cursor-pointer">
+            {/* before connecting wallet  */}
+            {!walletConnected && (
+              <WalletIcon
+                className="h-6 w-6 2xl:h-7 2xl:w-7"
+                onClick={connectWallet}
+              />
+            )}
+
+            {/* After connecting wallet  */}
+            {walletConnected && (
+              <MagnifyingGlassIcon className="h-6 w-6 2xl:h-7 2xl:w-7" />
+            )}
+            {walletConnected && (
+              <ShoppingCartIcon className="h-6 w-6 2xl:h-7 2xl:w-7" />
+            )}
+            {walletConnected && (
+              <UserCircleIcon className="h-6 w-6 2xl:h-7 2xl:w-7" />
+            )}
+            {walletConnected && (
+              <ArrowLeftOnRectangleIcon className="h-5 w-5 2xl:h-7 2xl:w-7" />
+            )}
+
+            <SunIcon className="h-5 w-5 2xl:h-7 2xl:w-7" />
           </div>
         </div>
 

@@ -3,6 +3,12 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/solid";
 import Collection_Card_Item from "../../components/Collection_Card_Item";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Pagination } from "swiper";
+import image from "../../assets/nftImage.jpg";
+import bored1 from "../../assets/bored1.webp";
+import bored2 from "../../assets/bored2.webp";
+import bored3 from "../../assets/bored3.webp";
+import bored4 from "../../assets/bored4.webp";
+
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/free-mode";
@@ -54,25 +60,53 @@ const Trending_section = () => {
           }}
         >
           <SwiperSlide>
-            <Collection_Card_Item />
+            <Collection_Card_Item
+              image={image}
+              name={"Bored Ape Club"}
+              description={"Lorem ipsum dolor sit amet consectetur sample..."}
+            />
           </SwiperSlide>
           <SwiperSlide>
-            <Collection_Card_Item />
+            <Collection_Card_Item
+              image={bored1}
+              name={"Bored Ape Diamond"}
+              description={"Lorem ipsum dolor sit amet consectetur sample..."}
+            />
           </SwiperSlide>
           <SwiperSlide>
-            <Collection_Card_Item />
+            <Collection_Card_Item
+              image={bored2}
+              name={"Bored Ape Jungle"}
+              description={"Lorem ipsum dolor sit amet consectetur sample..."}
+            />
           </SwiperSlide>
           <SwiperSlide>
-            <Collection_Card_Item />
+            <Collection_Card_Item
+              image={bored3}
+              name={"Funny Ape Club"}
+              description={"Lorem ipsum dolor sit amet consectetur sample..."}
+            />
           </SwiperSlide>
           <SwiperSlide>
-            <Collection_Card_Item />
+            <Collection_Card_Item
+              image={bored4}
+              name={"Fatty Guys"}
+              description={"Lorem ipsum dolor sit amet consectetur sample..."}
+            />
           </SwiperSlide>
           <SwiperSlide>
-            <Collection_Card_Item />
+            <Collection_Card_Item
+              image={image}
+              name={"Real Regin"}
+              description={"Lorem ipsum dolor sit amet consectetur sample..."}
+            />
           </SwiperSlide>
           <SwiperSlide>
-            <Collection_Card_Item />
+            <Collection_Card_Item
+              image={bored1}
+              name={"Cool Boys Collection"}
+              description={"Lorem ipsum dolor sit amet consectetur sample..."}
+            />
           </SwiperSlide>
         </Swiper>
       </div>
