@@ -3,11 +3,14 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/solid";
 import Collection_Card_Item from "../../components/Collection_Card_Item";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Pagination } from "swiper";
+<<<<<<< HEAD
 import image from "../../assets/nftImage.jpg";
 import bored1 from "../../assets/bored1.webp";
 import bored2 from "../../assets/bored2.webp";
 import bored3 from "../../assets/bored3.webp";
 import bored4 from "../../assets/bored4.webp";
+=======
+>>>>>>> 7460fb4ce649adede37876de97f672779f684e80
 
 // Import Swiper styles
 import "swiper/css";
