@@ -6,7 +6,9 @@ import Image from "next/image";
 import nftImage from "../assets/nftImage.jpg";
 
 const Firstsection = () => {
-  return <div></div>;
+  return <div>
+    
+  </div>;
 };
 
 export default Firstsection;
