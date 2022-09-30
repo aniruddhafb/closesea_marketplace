@@ -30,10 +30,10 @@ const Trending_section = () => {
           {/* NAVIGATION BTN */}
           <div className="space-x-2 my-5">
             <button className="p-4  focus:rounded-full focus:shadow-lg focus:shadow-black">
-              <ArrowLeftIcon className="h-4 w-4 " fill="white" />
+              <ArrowLeftIcon className="h-4 w-4 left-arrow" fill="white" />
             </button>
             <button className="p-4 focus:rounded-full focus:shadow-lg focus:shadow-black ">
-              <ArrowRightIcon className="h-4 w-4 " fill="white" />
+              <ArrowRightIcon className="h-4 w-4 right-arrow" fill="white" />
             </button>
           </div>
         </div>
@@ -48,8 +48,11 @@ const Trending_section = () => {
           pagination={{
             clickable: true,
           }}
+          navigation={{
+            nextEl: ".right-arrow",
+            prevEl: ".left-arrow",
+          }}
           modules={[FreeMode, Pagination]}
-          className=""
           breakpoints={{
             1024: {
               slidesPerView: 3,
