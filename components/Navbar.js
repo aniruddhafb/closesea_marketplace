@@ -39,11 +39,8 @@ const Navbar = () => {
 
         const { chainId } = await web3Provider.getNetwork();
 
-        // if (chainId !== 3) {
-        //   window.alert("please select ROPSTEN network!!!");
-        // }
+        localStorage.setItem("walletStatus", true);
         setWalletConnected(true);
-        localStorage("walletStatus", walletConnected);
       }
     } catch (error) {
       console.log(error);
@@ -51,15 +48,15 @@ const Navbar = () => {
   };
 
   const logout = async () => {
-    window.alert("disconnecting wallet");
+    localStorage.removeItem("walletStatus");
+    setWalletConnected(false);
   };
 
   useEffect(() => {
-    // connectWallet();
     const walletStatus = localStorage.getItem("walletStatus");
-    if (!walletStatus) {
-      connectWallet();
-    }
+    console.log({ walletStatus });
+    setWalletConnected(walletStatus);
+    // if (!walletConnected) connectWallet();
   }, []);
 
   const Popup = () => {
