@@ -10,12 +10,14 @@ import {
   UserCircleIcon,
   WalletIcon,
   ArrowLeftOnRectangleIcon,
+  DocumentDuplicateIcon,
 } from "@heroicons/react/24/solid";
 import { ethers } from "ethers";
 // import { network } from "hardhat";
 
 const Navbar = () => {
   const [walletConnected, setWalletConnected] = useState(false);
+  const [showPopup, setShowPopup] = useState(true);
 
   const web3ModalRef = useRef();
 
@@ -27,7 +29,6 @@ const Navbar = () => {
           providerOptions: {},
           disableInjectedProvider: false,
         });
-
         const provider = await web3ModalRef.current.connect();
 
         const web3Provider = new ethers.providers.Web3Provider(provider);
@@ -47,6 +48,26 @@ const Navbar = () => {
   useEffect(() => {
     connectWallet();
   }, []);
+
+  const Popup = () => {
+    return (
+      <>
+        <div className="absolute top-10 right-0 bg-black p-3 z-10 text-sm w">
+          <div className="flex items-center w-full">
+            <div>
+              <UserCircleIcon className="h-7 w-7" />
+            </div>
+            <b>Unnamed</b>
+
+            <div className="text-xs">0x0000...7d</div>
+            <div>
+              <DocumentDuplicateIcon className="h-5 w-5" />
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  };
 
   return (
     <div>
@@ -94,13 +115,20 @@ const Navbar = () => {
               <ShoppingCartIcon className="h-6 w-6 2xl:h-7 2xl:w-7" />
             )}
             {walletConnected && (
-              <UserCircleIcon className="h-6 w-6 2xl:h-7 2xl:w-7" />
-            )}
-            {walletConnected && (
               <ArrowLeftOnRectangleIcon className="h-5 w-5 2xl:h-7 2xl:w-7" />
             )}
-
             <SunIcon className="h-5 w-5 2xl:h-7 2xl:w-7" />
+            {walletConnected && (
+              <>
+                <div className="relative">
+                  <UserCircleIcon
+                    className="h-6 w-6 2xl:h-7 2xl:w-7"
+                    onClick={() => setShowPopup(!showPopup)}
+                  />
+                  {showPopup && Popup()}
+                </div>
+              </>
+            )}
           </div>
         </div>
 
