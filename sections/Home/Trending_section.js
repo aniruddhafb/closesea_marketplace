@@ -3,14 +3,11 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/solid";
 import Collection_Card_Item from "../../components/Collection_Card_Item";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Pagination } from "swiper";
-<<<<<<< HEAD
 import image from "../../assets/nftImage.jpg";
 import bored1 from "../../assets/bored1.webp";
 import bored2 from "../../assets/bored2.webp";
 import bored3 from "../../assets/bored3.webp";
 import bored4 from "../../assets/bored4.webp";
-=======
->>>>>>> 7460fb4ce649adede37876de97f672779f684e80
 
 // Import Swiper styles
 import "swiper/css";
@@ -33,10 +30,10 @@ const Trending_section = () => {
           {/* NAVIGATION BTN */}
           <div className="space-x-2 my-5">
             <button className="p-4  focus:rounded-full focus:shadow-lg focus:shadow-black">
-              <ArrowLeftIcon className="h-4 w-4 " fill="white" />
+              <ArrowLeftIcon className="h-4 w-4 left-arrow" fill="white" />
             </button>
             <button className="p-4 focus:rounded-full focus:shadow-lg focus:shadow-black ">
-              <ArrowRightIcon className="h-4 w-4 " fill="white" />
+              <ArrowRightIcon className="h-4 w-4 right-arrow" fill="white" />
             </button>
           </div>
         </div>
@@ -51,8 +48,11 @@ const Trending_section = () => {
           pagination={{
             clickable: true,
           }}
+          navigation={{
+            nextEl: ".right-arrow",
+            prevEl: ".left-arrow",
+          }}
           modules={[FreeMode, Pagination]}
-          className=""
           breakpoints={{
             1024: {
               slidesPerView: 3,

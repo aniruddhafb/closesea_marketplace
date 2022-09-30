@@ -1,5 +1,7 @@
-import { React, useState } from "react";
+import { React, useState, useRef, useEffect } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import Web3Modal from "web3modal";
+
 import {
   BellIcon,
   ShoppingCartIcon,
@@ -10,26 +12,41 @@ import {
   ArrowLeftOnRectangleIcon,
 } from "@heroicons/react/24/solid";
 import { ethers } from "ethers";
+// import { network } from "hardhat";
 
 const Navbar = () => {
-  async function connectWallet() {
-    const { ethers } = require("ethers");
-    if (window.ethereum) {
-      try {
-        const accounts = window.ethereum.request({
-          method: "eth_requestAccounts",
-        });
-        setWalletConnected(!walletConnected);
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-      } catch (error) {
-        console.log("Error connecting metamask..");
-      }
-    } else {
-      console.log("metamask not detected");
-    }
-  }
-
   const [walletConnected, setWalletConnected] = useState(false);
+
+  const web3ModalRef = useRef();
+
+  const connectWallet = async () => {
+    try {
+      if (!walletConnected) {
+        web3ModalRef.current = new Web3Modal({
+          network: "ropsten",
+          providerOptions: {},
+          disableInjectedProvider: false,
+        });
+
+        const provider = await web3ModalRef.current.connect();
+
+        const web3Provider = new ethers.providers.Web3Provider(provider);
+
+        const { chainId } = await web3Provider.getNetwork();
+
+        if (chainId !== 3) {
+          window.alert("please select ROPSTEN network!!!");
+        }
+        setWalletConnected(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    connectWallet();
+  }, []);
 
   return (
     <div>
