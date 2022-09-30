@@ -13,7 +13,6 @@ import {
   DocumentDuplicateIcon,
 } from "@heroicons/react/24/solid";
 import { ethers } from "ethers";
-// import { network } from "hardhat";
 
 const Navbar = () => {
   const [walletConnected, setWalletConnected] = useState(false);
@@ -39,6 +38,7 @@ const Navbar = () => {
           window.alert("please select ROPSTEN network!!!");
         }
         setWalletConnected(true);
+        localStorage("walletStatus", walletConnected);
       }
     } catch (error) {
       console.log(error);
@@ -46,7 +46,11 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    connectWallet();
+    // connectWallet();
+    const walletStatus = localStorage.getItem("walletStatus");
+    if (!walletStatus) {
+      connectWallet();
+    }
   }, []);
 
   const Popup = () => {
@@ -71,7 +75,7 @@ const Navbar = () => {
 
   return (
     <div>
-      <div className="bg-[#0B0C0D] text-white h-[80px] flex items-center px-4 justify-between ">
+      <div className="bg-[#0B0C0D] text-white h-[80px] flex items-center px-4 justify-between">
         <div
           className="lg:w-1/5 ll:text-xl ll:w-1/4 2xl:text-3xl"
           style={{ fontWeight: "bold", paddingLeft: "25px" }}
