@@ -1,6 +1,8 @@
 import { React, useState, useRef, useEffect } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Web3Modal from "web3modal";
+import ethereum from "../assets/ethereum.png";
+import Image from "next/image";
 
 import {
   BellIcon,
@@ -10,14 +12,17 @@ import {
   UserCircleIcon,
   WalletIcon,
   ArrowLeftOnRectangleIcon,
+  ArrowRightOnRectangleIcon,
   DocumentDuplicateIcon,
+  UserIcon,
+  Cog6ToothIcon,
 } from "@heroicons/react/24/solid";
 import { ethers } from "ethers";
 // import { network } from "hardhat";
 
 const Navbar = () => {
   const [walletConnected, setWalletConnected] = useState(false);
-  const [showPopup, setShowPopup] = useState(true);
+  const [showPopup, setShowPopup] = useState(false);
 
   const web3ModalRef = useRef();
 
@@ -35,14 +40,18 @@ const Navbar = () => {
 
         const { chainId } = await web3Provider.getNetwork();
 
-        if (chainId !== 3) {
-          window.alert("please select ROPSTEN network!!!");
-        }
+        // if (chainId !== 3) {
+        //   window.alert("please select ROPSTEN network!!!");
+        // }
         setWalletConnected(true);
       }
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const logout = async () => {
+    window.alert("disconnecting wallet");
   };
 
   useEffect(() => {
@@ -52,17 +61,40 @@ const Navbar = () => {
   const Popup = () => {
     return (
       <>
-        <div className="absolute top-10 right-0 bg-black p-3 z-10 text-sm w">
-          <div className="flex items-center w-full">
-            <div>
+        <div className="absolute top-14 right-0 bg-[#2c323d] z-10 text-sm shadow-2xl rounded-b-xl">
+          <div className="flex items-center w-full p-4 border-b-[1px] border-[#505d66]">
+            <div className="flex justify-center mr-4">
               <UserCircleIcon className="h-7 w-7" />
+              <b className="mt-1">Unnamed</b>
             </div>
-            <b>Unnamed</b>
 
             <div className="text-xs">0x0000...7d</div>
             <div>
               <DocumentDuplicateIcon className="h-5 w-5" />
             </div>
+          </div>
+
+          <div className="flex flex-col p-5">
+            <button className="flex mb-4">
+              <UserIcon className="h-5 w-5 text-gray-300 2xl:h-6 2xl:w-8" />
+              <p className="bold">My Account</p>
+            </button>
+            <button className="flex mb-4">
+              <Cog6ToothIcon className="h-5 w-5 text-gray-300 2xl:h-6 2xl:w-8" />
+              <p className="bold">Preferences</p>
+            </button>
+            <button className="flex" onClick={logout}>
+              <ArrowRightOnRectangleIcon className="h-5 w-5 text-gray-300 2xl:h-6 2xl:w-8" />
+              <p className="bold">Logout</p>
+            </button>
+          </div>
+
+          <div className="mx-5 mb-4 p-5 border-2 border-[#3b4349] rounded-lg flex flex-row justify-around">
+            <div className="flex flex-row justify-around">
+              <Image src={ethereum} height="20px" width="20px" />
+              <p> ETH</p>
+            </div>
+            <div>2.14</div>
           </div>
         </div>
       </>
@@ -109,13 +141,10 @@ const Navbar = () => {
 
             {/* After connecting wallet  */}
             {walletConnected && (
-              <MagnifyingGlassIcon className="h-6 w-6 2xl:h-7 2xl:w-7" />
+              <ShoppingCartIcon className="h-5 w-5 2xl:h-6 2xl:w-6" />
             )}
             {walletConnected && (
-              <ShoppingCartIcon className="h-6 w-6 2xl:h-7 2xl:w-7" />
-            )}
-            {walletConnected && (
-              <ArrowLeftOnRectangleIcon className="h-5 w-5 2xl:h-7 2xl:w-7" />
+              <BellIcon className="h-5 w-5 2xl:h-6 2xl:w-6" />
             )}
             <SunIcon className="h-5 w-5 2xl:h-7 2xl:w-7" />
             {walletConnected && (
