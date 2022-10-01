@@ -9,6 +9,7 @@ module.exports = {
     extend: {
       boxShadow: {
         "3xl": "0 35px 60px -15px rgba(0, 0, 0, 0.3)",
+        "4xl": "0 3px 5px 3px rgba(0, 0, 2, 0.22)",
       },
     },
     screens: {
