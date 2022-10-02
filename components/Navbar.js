@@ -5,6 +5,7 @@ import ethereum from "../assets/ethereum.png";
 import polygon from "../assets/polygon.png";
 import binance from "../assets/binance.png";
 import Image from "next/image";
+
 import {
   BellIcon,
   ShoppingCartIcon,
@@ -28,7 +29,7 @@ const Navbar = () => {
 
   const [userAddress, setUserAddress] = useState("");
   const [userBalance, setUserBalance] = useState("");
-  const [chainIdMain, setChainIdMain] = useState();
+  const [chainIdMain, setChainIdMain] = useState(null);
 
   // ethereum.on("chainChanged", (chainId) => {
   //   window.location.reload();
@@ -71,6 +72,7 @@ const Navbar = () => {
         setWalletConnected(true);
       }
     } catch (error) {
+      walletStatus;
       console.log(error);
     }
   };
@@ -83,20 +85,21 @@ const Navbar = () => {
 
   // on website load
   useEffect(() => {
+    console.log({ chainIdMain });
     const walletStatus = localStorage.getItem("walletStatus");
-    console.log({ walletStatus });
     setWalletConnected(walletStatus);
     if (!walletConnected) connectWallet();
-  }, []);
+  }, [chainIdMain]);
 
   // switch or add chain mainnets
   const switchEthereumChain = async () => {
+    setChainIdMain("1");
     try {
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
         params: [{ chainId: "0x1" }],
       });
-      window.location.reload(false);
+      // window.location.reload(false);
     } catch (error) {
       if (error.code === 4902) {
         try {
@@ -116,20 +119,22 @@ const Navbar = () => {
               },
             ],
           });
-          window.location.reload(false);
+          // window.location.reload(false);
         } catch (addError) {
           console.error(addError);
         }
       }
     }
   };
+
   const switchBinanceChain = async () => {
+    setChainIdMain("56");
     try {
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
         params: [{ chainId: "0x38" }],
       });
-      window.location.reload(false);
+      // window.location.reload(false);
     } catch (error) {
       if (error.code === 4902) {
         try {
@@ -149,20 +154,22 @@ const Navbar = () => {
               },
             ],
           });
-          window.location.reload(false);
+          // window.location.reload(false);
         } catch (addError) {
           console.error(addError);
         }
       }
     }
   };
+
   const switchPolygonChain = async () => {
+    setChainIdMain("137");
     try {
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
         params: [{ chainId: "0x89" }],
       });
-      window.location.reload(false);
+      // window.location.reload(false);
     } catch (error) {
       if (error.code === 4902) {
         try {
@@ -182,7 +189,7 @@ const Navbar = () => {
               },
             ],
           });
-          window.location.reload(false);
+          // window.location.reload(false);
         } catch (addError) {
           console.error(addError);
         }
@@ -201,7 +208,9 @@ const Navbar = () => {
               <b className="mt-1">Unnamed</b>
             </div>
 
-            <div className="text-xs">{userAddress}</div>
+            <div className="text-xs">
+              {userAddress.slice(0, 4) + "......." + userAddress.slice(38)}
+            </div>
             <div>
               <DocumentDuplicateIcon className="h-5 w-5" />
             </div>

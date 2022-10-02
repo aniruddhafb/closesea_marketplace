@@ -15,6 +15,7 @@ const menus = [
 ];
 
 const profile = () => {
+
   return (
     <div>
       <Navbar />
