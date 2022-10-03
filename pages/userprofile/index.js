@@ -43,9 +43,13 @@ const profile = () => {
           <div className="flex space-between text-white  items-start space-x-2 lg:space-x-5">
             <div className="p-8 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 shadow-lg shadow-black lg:p-12 "></div>
             <div className="mx-10">
-              <b className="text-xl">{userAddress}</b>
+              <b className="text-3xl">
+                {userAddress.slice(0, 5) + "...." + userAddress.slice(38)}
+              </b>
               <div className="flex text-xs space-x-2 items-center lg:my-2">
-                <p className="">{userAddress}</p>
+                <p className="text-sm">
+                  {userAddress.slice(0, 5) + "...." + userAddress.slice(38)}
+                </p>
                 <ClipboardDocumentIcon className="h-5 w-5" />
               </div>
             </div>
@@ -66,10 +70,10 @@ const profile = () => {
           ))}
         </div>
         <div>
-          {nfts.map((nft, item) => {
+          {nfts.map((nft) => {
             return (
               <>
-                <p key={item}>{nft.meta.name}</p>
+                <p>{nft.meta.name}</p>
               </>
             );
           })}

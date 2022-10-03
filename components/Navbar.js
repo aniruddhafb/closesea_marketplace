@@ -1,11 +1,10 @@
 import { React, useState, useRef, useEffect } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Web3Modal from "web3modal";
-import ethereum from "../assets/ethereum.png";
+import ethereumPng from "../assets/ethereum.png";
 import polygon from "../assets/polygon.png";
 import binance from "../assets/binance.png";
 import Image from "next/image";
-import Link from "next/link";
 
 import {
   BellIcon,
@@ -32,9 +31,17 @@ const Navbar = () => {
   const [userBalance, setUserBalance] = useState("");
   const [chainIdMain, setChainIdMain] = useState(null);
 
-  // ethereum.on("chainChanged", (chainId) => {
-  //   window.location.reload();
-  // });
+  // on website load
+  useEffect(() => {
+    const walletStatus = localStorage.getItem("walletStatus");
+    setWalletConnected(walletStatus);
+    if (!walletConnected) connectWallet();
+
+    // window.ethereum.on("accountsChanged", function (userAddress) {
+    //   console.log({ userAddress });
+    //   window.location.reload(false);
+    // });
+  }, [chainIdMain]);
 
   // login
   const connectWallet = async () => {
@@ -85,23 +92,15 @@ const Navbar = () => {
     setWalletConnected(false);
   };
 
-  // on website load
-  useEffect(() => {
-    console.log({ chainIdMain });
-    const walletStatus = localStorage.getItem("walletStatus");
-    setWalletConnected(walletStatus);
-    // localStorage.setItem("walletAddress", userAddress);
-    if (!walletConnected) connectWallet();
-  }, [chainIdMain]);
-
   // switch or add chain mainnets
   const switchEthereumChain = async () => {
-    setChainIdMain("1");
     try {
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
         params: [{ chainId: "0x1" }],
       });
+      setChainIdMain("1");
+      setShowNetworkPopup(!showNetworkPopup);
       // window.location.reload(false);
     } catch (error) {
       if (error.code === 4902) {
@@ -122,7 +121,8 @@ const Navbar = () => {
               },
             ],
           });
-          // window.location.reload(false);
+          setChainIdMain("1");
+          setShowNetworkPopup(!showNetworkPopup);
         } catch (addError) {
           console.error(addError);
         }
@@ -131,12 +131,13 @@ const Navbar = () => {
   };
 
   const switchBinanceChain = async () => {
-    setChainIdMain("56");
     try {
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
         params: [{ chainId: "0x38" }],
       });
+      setChainIdMain("56");
+      setShowNetworkPopup(!showNetworkPopup);
       // window.location.reload(false);
     } catch (error) {
       if (error.code === 4902) {
@@ -157,7 +158,8 @@ const Navbar = () => {
               },
             ],
           });
-          // window.location.reload(false);
+          setChainIdMain("56");
+          setShowNetworkPopup(!showNetworkPopup);
         } catch (addError) {
           console.error(addError);
         }
@@ -166,12 +168,13 @@ const Navbar = () => {
   };
 
   const switchPolygonChain = async () => {
-    setChainIdMain("137");
     try {
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
         params: [{ chainId: "0x89" }],
       });
+      setChainIdMain("137");
+      setShowNetworkPopup(!showNetworkPopup);
       // window.location.reload(false);
     } catch (error) {
       if (error.code === 4902) {
@@ -192,7 +195,8 @@ const Navbar = () => {
               },
             ],
           });
-          // window.location.reload(false);
+          setChainIdMain("137");
+          setShowNetworkPopup(!showNetworkPopup);
         } catch (addError) {
           console.error(addError);
         }
@@ -212,7 +216,7 @@ const Navbar = () => {
             </div>
 
             <div className="text-xs">
-              {userAddress.slice(0, 4) + "......." + userAddress.slice(38)}
+              {userAddress.slice(0, 5) + "...." + userAddress.slice(38)}
             </div>
             <div>
               <DocumentDuplicateIcon className="h-5 w-5" />
@@ -238,7 +242,7 @@ const Navbar = () => {
           {chainIdMain == 1 && (
             <div className="mx-5 mb-4 p-5 border-2 border-[#3b4349] rounded-lg flex flex-row justify-around">
               <div className="flex flex-row justify-around">
-                <Image src={ethereum} height="20px" width="20px" />
+                <Image src={ethereumPng} height="20px" width="20px" />
                 <p>ETH</p>
               </div>
               <div>{userBalance}</div>
@@ -247,7 +251,7 @@ const Navbar = () => {
           {chainIdMain == 3 && (
             <div className="mx-5 mb-4 p-5 border-2 border-[#3b4349] rounded-lg flex flex-row justify-around">
               <div className="flex flex-row justify-around">
-                <Image src={ethereum} height="20px" width="20px" />
+                <Image src={ethereumPng} height="20px" width="20px" />
                 <p>ETH</p>
               </div>
               <div>{userBalance}</div>
@@ -306,7 +310,7 @@ const Navbar = () => {
               className="flex flex-row justify-center mt-4 mb-2"
               onClick={() => switchEthereumChain()}
             >
-              <Image src={ethereum} height="26px" width="28px" />
+              <Image src={ethereumPng} height="26px" width="28px" />
               <p className="pl-1 pr-2 font-bold text-[#b8c6dc] text-lg">
                 Ethereum
               </p>
@@ -361,14 +365,14 @@ const Navbar = () => {
             >
               {chainIdMain == 1 && (
                 <>
-                  <Image src={ethereum} height="26px" width="28px" />
+                  <Image src={ethereumPng} height="26px" width="28px" />
                   <p className="pl-1 pr-2 font-bold text-[#b8c6dc]">Ethereum</p>
                   <ChevronDownIcon className="h-3 w-3 2xl:h-3 2xl:w-3 mt-2 hover:text-blue-400" />
                 </>
               )}
               {chainIdMain == 3 && (
                 <>
-                  <Image src={ethereum} height="26px" width="28px" />
+                  <Image src={ethereumPng} height="26px" width="28px" />
                   <p className="pl-1 pr-2 font-bold text-[#b8c6dc]">
                     Ropsten Testnet
                   </p>
