@@ -5,7 +5,7 @@ import ethereum from "../assets/ethereum.png";
 import polygon from "../assets/polygon.png";
 import binance from "../assets/binance.png";
 import Image from "next/image";
-
+import Link from "next/link";
 import {
   BellIcon,
   ShoppingCartIcon,
@@ -219,7 +219,9 @@ const Navbar = () => {
           <div className="flex flex-col p-5">
             <button className="flex mb-4">
               <UserIcon className="h-5 w-5 text-gray-300 2xl:h-6 2xl:w-8" />
-              <p className="bold">My Account</p>
+              <Link href="/users">
+                <p className="bold">My Account</p>
+              </Link>
             </button>
             <button className="flex mb-4">
               <Cog6ToothIcon className="h-5 w-5 text-gray-300 2xl:h-6 2xl:w-8" />
