@@ -5,6 +5,7 @@ import ethereumPng from "../assets/ethereum.png";
 import polygon from "../assets/polygon.png";
 import binance from "../assets/binance.png";
 import Image from "next/image";
+import Link from "next/link";
 
 import {
   BellIcon,
@@ -226,7 +227,7 @@ const Navbar = () => {
           <div className="flex flex-col p-5">
             <button className="flex mb-4">
               <UserIcon className="h-5 w-5 text-gray-300 2xl:h-6 2xl:w-8" />
-              <Link href="/users">
+              <Link href="/userprofile">
                 <p className="bold">My Account</p>
               </Link>
             </button>
