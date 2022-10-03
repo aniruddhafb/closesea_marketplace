@@ -5,6 +5,7 @@ import ethereum from "../assets/ethereum.png";
 import polygon from "../assets/polygon.png";
 import binance from "../assets/binance.png";
 import Image from "next/image";
+import Link from "next/link";
 import {
   BellIcon,
   ShoppingCartIcon,
@@ -53,6 +54,7 @@ const Navbar = () => {
         // get wallet address
         const walletAddress = await signer.getAddress();
         setUserAddress(walletAddress);
+        localStorage.setItem("walletAddress", walletAddress);
 
         // get account balance
         const rawWalletBalance = await signer.getBalance();
@@ -84,10 +86,10 @@ const Navbar = () => {
   // on website load
   useEffect(() => {
     const walletStatus = localStorage.getItem("walletStatus");
-    console.log({ walletStatus });
     setWalletConnected(walletStatus);
+    // localStorage.setItem("walletAddress", userAddress);
     if (!walletConnected) connectWallet();
-  }, []);
+  }, [userAddress]);
 
   // switch or add chain mainnets
   const switchEthereumChain = async () => {
