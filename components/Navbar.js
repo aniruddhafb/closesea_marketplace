@@ -82,6 +82,10 @@ const Navbar = () => {
         setWalletConnected(true);
       }
     } catch (error) {
+<<<<<<< HEAD
+=======
+      // walletStatus;
+>>>>>>> 59fb9f6e49c792311668380ba65aac337a3bc464
       console.log(error);
     }
   };

@@ -23,8 +23,8 @@ const profile = () => {
       `https://api.rarible.org/v0.1/items/byOwner?owner=ETHEREUM:${userAddress}`
     );
     const data = await response.json();
-    setNfts(data.items);
-    // debugger;
+    debugger;
+    // setNfts(data.items);
   };
 
   useEffect(() => {
