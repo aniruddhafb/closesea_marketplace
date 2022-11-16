@@ -1,7 +1,7 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.0;
 
-import "hardhat/console.sol";
+// import "hardhat/console.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
@@ -21,7 +21,7 @@ contract NFTMarketplace is ERC721URIStorage {
         bool currentlyListed;
     }
 
-    event TokenListedSuccess (
+    event TokenListedSuccess(
         uint256 tokenId,
         address payable seller,
         address payable owner,
@@ -31,11 +31,15 @@ contract NFTMarketplace is ERC721URIStorage {
 
     mapping(uint256 => ListedToken) private idToListedToken;
 
-    constructor() ERC721("NFTMarketplace", "NFTM"){
+    constructor() ERC721("NFTMarketplace", "NFTM") {
         owner = payable(msg.sender);
     }
 
-    function createToken(string memory tokenURI, uint256 price) public payable returns (uint) {
+    function createToken(string memory tokenURI, uint256 price)
+        public
+        payable
+        returns (uint256)
+    {
         _tokenIds.increment();
         uint256 newTokenId = _tokenIds.current();
         _safeMint(msg.sender, newTokenId);
@@ -47,42 +51,60 @@ contract NFTMarketplace is ERC721URIStorage {
     function createListedToken(uint256 tokenId, uint256 price) private {
         require(msg.value == listPrice, "Please pay the listing price");
         require(price > 0, "Please make sure price is not a negative value");
-        
-        idToListedToken[tokenId] = ListedToken(tokenId, payable(address(this)), payable(msg.sender), price, true);
+
+        idToListedToken[tokenId] = ListedToken(
+            tokenId,
+            payable(address(this)),
+            payable(msg.sender),
+            price,
+            true
+        );
         _transfer(msg.sender, address(this), tokenId);
 
-        emit TokenListedSuccess(tokenId, payable(address(this)), payable(msg.sender), price, true);        
+        emit TokenListedSuccess(
+            tokenId,
+            payable(address(this)),
+            payable(msg.sender),
+            price,
+            true
+        );
     }
 
     function getAllNFTs() public view returns (ListedToken[] memory) {
-        uint nftCount = _tokenIds.current();
+        uint256 nftCount = _tokenIds.current();
         ListedToken[] memory tokens = new ListedToken[](nftCount);
         uint256 currentIndex = 0;
 
-        for(uint i = 0; i < nftCount; i++) {
+        for (uint256 i = 0; i < nftCount; i++) {
             uint256 currentId = i + 1;
             ListedToken storage currentItem = idToListedToken[currentId];
             tokens[currentIndex] = currentItem;
-            currentIndex += 1;         
+            currentIndex += 1;
         }
         return tokens;
     }
-    
-    function getMyNFTs() public view returns (ListedToken[] memory) {
-        uint totalItemCount = _tokenIds.current();
-        uint itemCount = 0;
-        uint currentIndex = 0;
 
-        for(uint i = 0; i < totalItemCount; i++) {
-            if(idToListedToken[i+1].owner == msg.sender || idToListedToken[i+1].seller == msg.sender){
+    function getMyNFTs() public view returns (ListedToken[] memory) {
+        uint256 totalItemCount = _tokenIds.current();
+        uint256 itemCount = 0;
+        uint256 currentIndex = 0;
+
+        for (uint256 i = 0; i < totalItemCount; i++) {
+            if (
+                idToListedToken[i + 1].owner == msg.sender ||
+                idToListedToken[i + 1].seller == msg.sender
+            ) {
                 itemCount++;
             }
         }
 
         ListedToken[] memory items = new ListedToken[](itemCount);
-        for(uint i = 0; i < totalItemCount; i++) {
-            if(idToListedToken[i+1].owner == msg.sender || idToListedToken[i+1].seller == msg.sender){
-                uint currentId = i + 1;
+        for (uint256 i = 0; i < totalItemCount; i++) {
+            if (
+                idToListedToken[i + 1].owner == msg.sender ||
+                idToListedToken[i + 1].seller == msg.sender
+            ) {
+                uint256 currentId = i + 1;
                 ListedToken storage currentItem = idToListedToken[currentId];
                 items[currentIndex] = currentItem;
                 currentIndex += 1;
@@ -90,12 +112,15 @@ contract NFTMarketplace is ERC721URIStorage {
         }
         return items;
     }
-    
+
     function executeSale(uint256 tokenId) public payable {
         uint256 price = idToListedToken[tokenId].price;
         address seller = idToListedToken[tokenId].seller;
 
-        require(msg.value == price, "Please submit the asking price to complete the order");
+        require(
+            msg.value == price,
+            "Please submit the asking price to complete the order"
+        );
 
         idToListedToken[tokenId].currentlyListed = false;
         idToListedToken[tokenId].seller = payable(msg.sender);
@@ -113,16 +138,24 @@ contract NFTMarketplace is ERC721URIStorage {
         listPrice = _listPrice;
     }
 
-    function getListPrice() public view returns (uint) {
+    function getListPrice() public view returns (uint256) {
         return listPrice;
     }
 
-    function getListedIdToListedToken() public view returns (ListedToken memory) {
+    function getListedIdToListedToken()
+        public
+        view
+        returns (ListedToken memory)
+    {
         uint256 currentTokenId = _tokenIds.current();
         return idToListedToken[currentTokenId];
     }
 
-    function getListedTokenForId(uint256 tokenId) public view returns (ListedToken memory) {
+    function getListedTokenForId(uint256 tokenId)
+        public
+        view
+        returns (ListedToken memory)
+    {
         return idToListedToken[tokenId];
     }
 
