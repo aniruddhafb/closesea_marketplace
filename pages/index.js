@@ -5,6 +5,10 @@ import Homepage from "./home/Homepage";
 const index = () => {
   return (
     <>
+<<<<<<< HEAD
+=======
+      <Navbar />
+>>>>>>> main
       <Homepage />
     </>
   );

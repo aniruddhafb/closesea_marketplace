@@ -10,10 +10,14 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.0.11",
+<<<<<<< HEAD
     "@nomiclabs/hardhat-ethers": "^2.2.1",
     "@openzeppelin/contracts": "^4.8.0",
     "assert": "^2.0.0",
     "dotenv": "^16.0.3",
+=======
+    "@openzeppelin/contracts": "^4.8.0",
+>>>>>>> main
     "ethers": "^5.7.1",
     "next": "12.3.1",
     "react": "18.2.0",
@@ -22,12 +26,18 @@
     "web3modal": "^1.9.9"
   },
   "devDependencies": {
+<<<<<<< HEAD
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.4",
     "@nomicfoundation/hardhat-toolbox": "^2.0.0",
     "autoprefixer": "^10.4.12",
     "eslint": "8.24.0",
     "eslint-config-next": "12.3.1",
     "hardhat": "^2.12.2",
+=======
+    "autoprefixer": "^10.4.12",
+    "eslint": "8.24.0",
+    "eslint-config-next": "12.3.1",
+>>>>>>> main
     "postcss": "^8.4.16",
     "tailwindcss": "^3.1.8"
   }

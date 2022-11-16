@@ -23,8 +23,13 @@ const profile = () => {
       `https://api.rarible.org/v0.1/items/byOwner?owner=ETHEREUM:${userAddress}`
     );
     const data = await response.json();
+<<<<<<< HEAD
     setNfts(data.items);
     // debugger;
+=======
+    debugger;
+    // setNfts(data.items);
+>>>>>>> main
   };
 
   useEffect(() => {
@@ -35,7 +40,11 @@ const profile = () => {
 
   return (
     <div>
+<<<<<<< HEAD
       {/* <Navbar /> */}
+=======
+      <Navbar />
+>>>>>>> main
       <div>
         {/* HEADER */}
         <div className="h-40 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-bl-full"></div>
