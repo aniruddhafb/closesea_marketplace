@@ -82,7 +82,7 @@ const Navbar = () => {
         setWalletConnected(true);
       }
     } catch (error) {
-      walletStatus;
+      // walletStatus;
       console.log(error);
     }
   };
