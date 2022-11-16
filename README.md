@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Sample Hardhat Project
 
 This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
@@ -14,16 +15,22 @@ npx hardhat run scripts/deploy.js
 ```
 =======
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+=======
+# Sample Hardhat Project
+>>>>>>> 26514240e243fa8a934a1b7fba7b915e71807640
 
-## Getting Started
+This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
 
-First, run the development server:
+Try running some of the following tasks:
 
-```bash
-npm run dev
-# or
-yarn dev
+```shell
+npx hardhat help
+npx hardhat test
+REPORT_GAS=true npx hardhat test
+npx hardhat node
+npx hardhat run scripts/deploy.js
 ```
+<<<<<<< HEAD
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
@@ -48,3 +55,5 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 >>>>>>> main
+=======
+>>>>>>> 26514240e243fa8a934a1b7fba7b915e71807640

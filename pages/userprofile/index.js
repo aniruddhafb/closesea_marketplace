@@ -35,7 +35,7 @@ const profile = () => {
 
   return (
     <div>
-      <Navbar />
+      {/* <Navbar /> */}
       <div>
         {/* HEADER */}
         <div className="h-40 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-bl-full"></div>

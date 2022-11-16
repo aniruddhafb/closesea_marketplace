@@ -35,6 +35,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 26514240e243fa8a934a1b7fba7b915e71807640
 
 node_modules
 .env
@@ -59,5 +62,8 @@ typechain-types
 cache
 artifacts
 
+<<<<<<< HEAD
 =======
 >>>>>>> main
+=======
+>>>>>>> 26514240e243fa8a934a1b7fba7b915e71807640
