@@ -1,15 +1,6 @@
-import '../styles/globals.css'
-<<<<<<< HEAD
-import Navbar from '../components/Navbar'
+import "../styles/globals.css";
 function MyApp({ Component, pageProps }) {
-  return <>
-    <Navbar />
-    <Component {...pageProps} />
-  </>
-=======
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
->>>>>>> main
+  return <Component {...pageProps} />;
 }
 
-export default MyApp
+export default MyApp;
