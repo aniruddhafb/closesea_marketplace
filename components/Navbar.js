@@ -82,7 +82,6 @@ const Navbar = () => {
         setWalletConnected(true);
       }
     } catch (error) {
-      // walletStatus;
       console.log(error);
     }
   };
@@ -236,7 +235,7 @@ const Navbar = () => {
               <p className="bold">Preferences</p>
             </button>
             <button className="flex" onClick={logout}>
-              <ArrowRightOnRectangleIcon className="h-5 w-5 text-gray-300 2xl:h-6 2xl:w-8" />
+              <LinkrrowRightOnRectangleIcon className="h-5 w-5 text-gray-300 2xl:h-6 2xl:w-8" />
               <p className="bold">Logout</p>
             </button>
           </div>
@@ -351,14 +350,14 @@ const Navbar = () => {
       <div className="bg-[#0B0C0D] text-white h-[80px] flex items-center px-4 justify-between">
         {/* website logo area  */}
         <div className="flex flex-row justify-around p-4 mr-6">
-          <a
+          <Link
             // className="lg:w-1/5 ll:text-xl ll:w-1/4 2xl:text-3xl"
             className="text-2xl mr-4"
             style={{ fontWeight: "bold", paddingLeft: "25px" }}
             href="/"
           >
             CloseSea
-          </a>
+          </Link>
 
           {/* network change  */}
           <button className="relative hidden sm:block">
@@ -435,9 +434,9 @@ const Navbar = () => {
 
           {/* other options  */}
           <div className="flex font-bold text-gray-300 space-x-4 2xl:space-x-5 text-xl">
-            <a href="">Marketplace</a>
-            <a href="">Rankings</a>
-            <a href="">Blog</a>
+            <Link href="">Marketplace</Link>
+            <Link href="">Rankings</Link>
+            <Link href="/create">Create</Link>
           </div>
 
           {/* other icons  */}
