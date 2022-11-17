@@ -8,8 +8,8 @@ export const uploadJSONToIPFS = async (JSONBody) => {
   return axios
     .post(url, JSONBody, {
       headers: {
-        pinata_api_key: key,
-        pinata_secret_api_key: secret,
+        "pinata_api_key": "1dc7b286f1b4e76e67b3",
+        "pinata_secret_api_key": "80a361eee5dc4ccecd6fbb08d608dad4366471235668888ddd3a5b57088f2d3e",
       },
     })
     .then((response) => {
@@ -30,13 +30,16 @@ export const uploadJSONToIPFS = async (JSONBody) => {
 
 export const uploadFileToIPFS = async (file) => {
   const url = "https://api.pinata.cloud/pinning/pinFileToIPFS";
+
   let data = new FormData();
   data.append("file", file);
 
   const metadata = JSON.stringify({
-    name: "testname",
+    name: "closeseaNFTMetadata",
     keyValues: {
-      exampleKey: "exampleValue",
+      "name": "closesea_nft1",
+      "teamSize": "2",
+      "project": "first",
     },
   });
 
@@ -64,8 +67,8 @@ export const uploadFileToIPFS = async (file) => {
       maxBodyLength: "Infinity",
       headers: {
         "Content-Type": `multipart/form-data; boundary=${data._boundary}`,
-        pinata_api_key: key,
-        pinata_secret_api_key: secret,
+        "pinata_api_key": "1dc7b286f1b4e76e67b3",
+        "pinata_secret_api_key": "80a361eee5dc4ccecd6fbb08d608dad4366471235668888ddd3a5b57088f2d3e",
       },
     })
     .then((response) => {

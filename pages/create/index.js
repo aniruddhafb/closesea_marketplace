@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import img from "../../assets/binance.png";
 import axios from "axios";
+import ethers from 'ethers'
 import { uploadFileToIPFS, uploadJSONToIPFS } from "../../pinata";
-// import { ethers } from "hardhat";
-// import Marketplace from "../../artifacts/contracts/NFTMarketplace.sol";
 
-const create = () => {
+const create = () => { 
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -24,7 +23,6 @@ const create = () => {
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    console.log(formData);
   };
 
   const onFileSelect = async (file) => {
@@ -43,17 +41,17 @@ const create = () => {
 
   const uploadMetadataToIPFS = async () => {
     const { name, description, extLink, fileURL, price } = formData;
-    if (!name || !description || !extLink || !fileURL || !price) return;
+    if (!name || !description || !fileURL || !price) return;
     const nftJson = {
       name,
       description,
-      extLink,
-      fileURL: fileURL,
+      image: fileURL,
       price,
     };
-
+    
     try {
       const response = await uploadJSONToIPFS(nftJson);
+      console.log('continue...')
       if (response.success) {
         console.log("Uploaded Json to Pinata: ", response);
         return response.pinataURL;
@@ -65,15 +63,32 @@ const create = () => {
 
   const listNFT = async (e) => {
     e.preventDefault();
+    console.log('minting...')
 
-    try {
+    // try {
       const metadataURL = await uploadMetadataToIPFS();
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      updateMessage("Please Wait...uploading (upto 5 mins)");
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
 
-      let contract = new ethers.Contract();
-    } catch (error) {}
+      const signer = provider.getSigner();
+
+      const marketplaceInfo = {
+        abi : process.env.CONTRACT_ABI,
+        address: CONTRACT_ADDRESS
+      }
+    
+      let contract = new ethers.Contract(marketplaceInfo.address, marketplaceInfo.abi, signer);
+      const price = ethers.utils.parseEther(formData.price, 'ether');
+      let listingPrice = await contract.getListingPrice()
+      listingPrice = listingPrice.toString()
+      
+      let transaction = await contract.createToken(metadataURL, price, {value: listingPrice})
+      await transaction.wait()
+      
+      alert("Successfully listed your NFT");
+      console.log('minted')
+    // } catch (error) {
+    //   console.log({error: error.message})
+    // }
   };
 
   return (
@@ -81,7 +96,7 @@ const create = () => {
       <h1 className="text-white my-10 text-center font-bold text-[35px]">
         Create New Item
       </h1>
-      <form>
+      <form onSubmit={listNFT}>
         <div className="text-white px-10 space-y-2 my-3">
           <div className="text-start text-white my-3">
             <b>Image, Video, Audio, or 3D</b>
@@ -157,7 +172,7 @@ const create = () => {
           {/* <div className='flex flex-col'>
           <input type="text" name="collection" id="collection" placeholder='collection' className={inputStyle}/>
           </div> */}
-          <button className="bg-blue-500 p-3 px-6 text-white font-bold rounded-lg text-lg my-3 hover:bg-blue-700">
+          <button className="bg-blue-500 p-3 px-6 text-white font-bold rounded-lg text-lg my-3 hover:bg-blue-700" type="submit">
             Create
           </button>
         </div>
