@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import img from "../../assets/binance.png";
 import axios from "axios";
-import ethers from 'ethers'
+// import ethers from 'ethers'
 import { uploadFileToIPFS, uploadJSONToIPFS } from "../../pinata";
 
 const create = () => { 
@@ -23,6 +23,7 @@ const create = () => {
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    console.log(formData)
   };
 
   const onFileSelect = async (file) => {
@@ -32,7 +33,8 @@ const create = () => {
       const response = await uploadFileToIPFS(file);
       if (response.success) {
         console.log("Uploaded image to pinata: ", response.pinataURL);
-        setFileUrl(response.pinataURL);
+        const imgUrl = response.pinataURL
+        setFormData({...formData, fileURL: imgUrl})
       }
     } catch (error) {
       console.log("Error during file upload", error);
@@ -41,6 +43,7 @@ const create = () => {
 
   const uploadMetadataToIPFS = async () => {
     const { name, description, extLink, fileURL, price } = formData;
+    console.log({name, description, fileURL, price})
     if (!name || !description || !fileURL || !price) return;
     const nftJson = {
       name,
@@ -63,23 +66,23 @@ const create = () => {
 
   const listNFT = async (e) => {
     e.preventDefault();
+    console.log({formData})
+    const ethers = require('ethers')
     console.log('minting...')
-
     // try {
       const metadataURL = await uploadMetadataToIPFS();
+      console.log({metadataURL})
       const provider = new ethers.providers.Web3Provider(window.ethereum)
 
       const signer = provider.getSigner();
 
-      const marketplaceInfo = {
-        abi : process.env.CONTRACT_ABI,
-        address: CONTRACT_ADDRESS
-      }
-    
-      let contract = new ethers.Contract(marketplaceInfo.address, marketplaceInfo.abi, signer);
+      const {testMarketplace} = require('../../test')
+
+      let contract = new ethers.Contract(testMarketplace.address, testMarketplace.abi, signer);
       const price = ethers.utils.parseEther(formData.price, 'ether');
-      let listingPrice = await contract.getListingPrice()
+      let listingPrice = await contract.getListPrice()
       listingPrice = listingPrice.toString()
+      console.log({listingPrice})
       
       let transaction = await contract.createToken(metadataURL, price, {value: listingPrice})
       await transaction.wait()
@@ -90,6 +93,16 @@ const create = () => {
     //   console.log({error: error.message})
     // }
   };
+
+  const testList = async (e) => {
+    e.preventDefault()
+    const ethers = require('ethers')
+    // const metadataURL = await uploadMetadataToIPFS();
+    //   const provider = new ethers.providers.Web3Provider(window.ethereum)
+
+    //   const signer = provider.getSigner();
+    //   console.log({signer})
+  }
 
   return (
     <div className="w-full flex items-center flex-col">
