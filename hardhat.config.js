@@ -1,5 +1,6 @@
 require("@nomicfoundation/hardhat-toolbox");
-
+const dotenv = require('dotenv')
+dotenv.config({path: './'})
 /** @type import('hardhat/config').HardhatUserConfig */
 
 module.exports = {

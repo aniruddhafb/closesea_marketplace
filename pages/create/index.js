@@ -1,10 +1,17 @@
 import React, { useState } from "react";
 import img from "../../assets/binance.png";
 import axios from "axios";
-// import ethers from 'ethers'
-import { uploadFileToIPFS, uploadJSONToIPFS } from "../../pinata";
+import Marketplace from '../../Marketplace.json'
+import {ArrowPathIcon} from '@heroicons/react/24/outline'
+import {uploadFileToIPFS, uploadJSONToIPFS} from "../../pinata";
+import { useRouter } from "next/router";
 
 const create = () => { 
+  const inputStyle =
+    "p-1 px-2 border-2 border-gray-400 text-black outline-none rounded-lg my-1";
+
+  const router = useRouter()
+
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -12,14 +19,11 @@ const create = () => {
     fileURL: "",
     extLink: "",
   });
+
+  const [modalMessage, setModalMessage] = useState({type: '', message: ''})
+  const [isLoading, setIsLoading] = useState(false)
   const [selectedFile, useSelectedFile] = useState();
   const [preview, setPreview] = useState();
-  const [fileURL, setFileUrl] = useState();
-  const inputStyle =
-    "p-1 px-2 border-2 border-gray-400 text-black outline-none rounded-lg my-1";
-
-  const key = process.env.REACT_APP_PINATA_KEY;
-  const secret = process.env.REACT_APP_PINATA_SECRET;
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -29,26 +33,17 @@ const create = () => {
   const onFileSelect = async (file) => {
     const preview = URL.createObjectURL(file);
     setPreview(preview);
-    try {
-      const response = await uploadFileToIPFS(file);
-      if (response.success) {
-        console.log("Uploaded image to pinata: ", response.pinataURL);
-        const imgUrl = response.pinataURL
-        setFormData({...formData, fileURL: imgUrl})
-      }
-    } catch (error) {
-      console.log("Error during file upload", error);
-    }
+    useSelectedFile(file)
   };
 
-  const uploadMetadataToIPFS = async () => {
+  const uploadMetadataToIPFS = async (imageURL) => {
     const { name, description, extLink, fileURL, price } = formData;
-    console.log({name, description, fileURL, price})
-    if (!name || !description || !fileURL || !price) return;
+    console.log({name, description, imageURL, price})
+    if (!name || !description || !imageURL || !price) return console.log('fill complete form');
     const nftJson = {
       name,
       description,
-      image: fileURL,
+      image: imageURL,
       price,
     };
     
@@ -66,43 +61,36 @@ const create = () => {
 
   const listNFT = async (e) => {
     e.preventDefault();
-    console.log({formData})
+    setModalMessage({type:'', message: ''})
+    setIsLoading(true)
     const ethers = require('ethers')
-    console.log('minting...')
-    // try {
-      const metadataURL = await uploadMetadataToIPFS();
+    try {
+        const response = await uploadFileToIPFS(selectedFile);
+        if (response.success) {
+          console.log("Uploaded image to pinata: ", response.pinataURL);
+        }
+      const metadataURL = await uploadMetadataToIPFS(response.pinataURL);
       console.log({metadataURL})
       const provider = new ethers.providers.Web3Provider(window.ethereum)
 
       const signer = provider.getSigner();
 
-      const {testMarketplace} = require('../../test')
-
-      let contract = new ethers.Contract(testMarketplace.address, testMarketplace.abi, signer);
+      let contract = new ethers.Contract(Marketplace.address, Marketplace.abi, signer);
       const price = ethers.utils.parseEther(formData.price, 'ether');
       let listingPrice = await contract.getListPrice()
       listingPrice = listingPrice.toString()
-      console.log({listingPrice})
       
       let transaction = await contract.createToken(metadataURL, price, {value: listingPrice})
       await transaction.wait()
-      
-      alert("Successfully listed your NFT");
-      console.log('minted')
-    // } catch (error) {
-    //   console.log({error: error.message})
-    // }
+      setModalMessage({type: 'success', message: 'Successfully listed your NFT'})
+      router.push('/')
+    } catch (error) {
+      console.log({error: error.message})
+      setModalMessage({type: 'error', message: error.message})
+    }
+    setIsLoading(false)
   };
 
-  const testList = async (e) => {
-    e.preventDefault()
-    const ethers = require('ethers')
-    // const metadataURL = await uploadMetadataToIPFS();
-    //   const provider = new ethers.providers.Web3Provider(window.ethereum)
-
-    //   const signer = provider.getSigner();
-    //   console.log({signer})
-  }
 
   return (
     <div className="w-full flex items-center flex-col">
@@ -182,14 +170,13 @@ const create = () => {
               onChange={onChange}
             ></textarea>
           </div>
-          {/* <div className='flex flex-col'>
-          <input type="text" name="collection" id="collection" placeholder='collection' className={inputStyle}/>
-          </div> */}
-          <button className="bg-blue-500 p-3 px-6 text-white font-bold rounded-lg text-lg my-3 hover:bg-blue-700" type="submit">
-            Create
+          {modalMessage.type && <div className={`w-full h-auto ${modalMessage.type == "success" ? "bg-green-500" : "bg-red-500"} p-1 rounded-lg`}>{modalMessage.message.slice(0, 80)}</div>}
+          <button disabled={isLoading} className="bg-blue-500 p-3 px-6 flex items-center space-x-2  text-white font-bold rounded-lg text-lg my-3 hover:bg-blue-700" type="submit">
+            {isLoading ? <ArrowPathIcon className="h-5 w-5 animate-spin"/>: <b>Create</b>}
           </button>
         </div>
       </form>
+      
     </div>
   );
 };
