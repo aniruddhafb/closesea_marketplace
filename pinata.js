@@ -2,28 +2,42 @@ import axios from "axios";
 
 export const uploadJSONToIPFS = async (JSONBody) => {
   const url = "https://api.pinata.cloud/pinning/pinJSONToIPFS";
-  return axios
+  const response = await axios
     .post(url, JSONBody, {
       headers: {
         "pinata_api_key": process.env.NEXT_PUBLIC_PINATA_KEY,
         "pinata_secret_api_key": process.env.NEXT_PUBLIC_PINATA_SECRET,
       },
     })
-    .then((response) => {
+
+    console.log({pinataIPFS: response.data})
+    const ipfsUrl = `https://gateway.pinata.cloud/ipfs/${response.data.IpfsHash}`;
+    console.log({ipfsUrl})
+
+    if(response){
       return {
         success: true,
-        pinataURL:
-          "https://gateway.pinata.cloud/ipfs/" + response.data.ipfsHash,
-      };
-    })
-    .catch((error) => {
-      console.log(error);
-      return {
-        success: false,
-        message: error.message,
-      };
-    });
+        pinataURL: ipfsUrl,
+      }
+    }
+
+
+    // .then((response) => {
+    //   return  {
+    //     success: true,
+    //     pinataURL:
+    //       "https://gateway.pinata.cloud/ipfs/" + response.data.ipfsHash,
+    //   };
+    // })
+    // .catch((error) => {
+    //   console.log(error);
+    //   return {
+    //     success: false,
+    //     message: error.message,
+    //   };
+    // });
 };
+
 export const uploadFileToIPFS = async (file) => {
   const url = "https://api.pinata.cloud/pinning/pinFileToIPFS";
 
