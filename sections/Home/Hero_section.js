@@ -8,6 +8,7 @@ import bored1 from "../../assets/bored1.webp";
 import bored2 from "../../assets/bored2.webp";
 import bored3 from "../../assets/bored3.webp";
 import bored4 from "../../assets/bored4.webp";
+import Link from "next/link";
 
 const Firstsection = () => {
   return (
@@ -21,12 +22,13 @@ const Firstsection = () => {
         {/* Buttons */}
         <div className="flex w-full justify-between my-6 text-center text-black font-semibold space-x-2">
           <button className="p-2 px-3 bg-white rounded-xl  w-full">
-            Discover
+            <Link href="/marketplace"> Discover </Link >
           </button>
-          <button className="p-2 px-3 border-2 bg-black border-white rounded-xl text-white w-full">
-            Create
+          <button className="p-2 px-3 border-2 bg-black border-white rounded-xl text-white w-full" >
+            <Link href="/create"> Create </Link >
           </button>
         </div>
+
 
         {/* Icons */}
         <div className="flex justify-start gap-x-2">

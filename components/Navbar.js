@@ -235,7 +235,7 @@ const Navbar = () => {
               <p className="bold">Preferences</p>
             </button>
             <button className="flex" onClick={logout}>
-              <LinkrrowRightOnRectangleIcon className="h-5 w-5 text-gray-300 2xl:h-6 2xl:w-8" />
+              <ArrowRightOnRectangleIcon className="h-5 w-5 text-gray-300 2xl:h-6 2xl:w-8" />
               <p className="bold">Logout</p>
             </button>
           </div>
@@ -434,7 +434,7 @@ const Navbar = () => {
 
           {/* other options  */}
           <div className="flex font-bold text-gray-300 space-x-4 2xl:space-x-5 text-xl">
-            <Link href="">Marketplace</Link>
+            <Link href="/marketplace">Marketplace</Link>
             <Link href="">Rankings</Link>
             <Link href="/create">Create</Link>
           </div>
