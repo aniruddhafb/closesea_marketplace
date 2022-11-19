@@ -8,12 +8,13 @@ import bored1 from "../../assets/bored1.webp";
 import bored2 from "../../assets/bored2.webp";
 import bored3 from "../../assets/bored3.webp";
 import bored4 from "../../assets/bored4.webp";
-import Link from "next/link";
 import Marketplace from '../../Marketplace.json'
-
-import { useEffect } from "react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import axios from "axios";
 const Firstsection = () => {
+
+  const [items, setItems] = useState([])
 
   useEffect(() => {
     getAllNFTs()
@@ -21,20 +22,38 @@ const Firstsection = () => {
   }, [])
 
   const getAllNFTs = async () => {
-    const ethers = require('ethers')
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner()
-    const contract = new ethers.Contract(Marketplace.address, Marketplace.abi, signer);
-    let transaction = await contract.getAllNFTs();
+    try {
 
-    const tokens = await Promise.all(transaction.map(async i => {
-      const tokenURI = await contract.tokenURI(i.tokenId);
-      console.log({ tokenURI })
-    }))
+      const ethers = require('ethers')
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner()
+      const contract = new ethers.Contract(Marketplace.address, Marketplace.abi, signer);
+      let transaction = await contract.getAllNFTs();
+      const items = await Promise.all(transaction.map(async i => {
+        const tokenURI = await contract.tokenURI(i.tokenId);
+        let meta = await axios.get(tokenURI)
+        meta = meta.data;
+        let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
+        let item = {
+          price,
+          tokenId: i.tokenId.toNumber(),
+          seller: i.seller,
+          owner: i.owner,
+          image: meta.image,
+          name: meta.name,
+          description: meta.description
+        }
+        return item
+      }))
 
+      console.log({ items })
+    } catch (error) {
+      console.log(error.message)
+    }
   }
   return (
     <div className="flex flex-wrap justify-evenly items-center">
+      <div className="text-white">{items && items.map(e => e.name)}</div>
       <div className="text-white p-6 md:w-[500px]">
         <h1 className="text-[3rem] font-bold">
           All Chains <br /> One <br className="md:hidden" /> Platform
