@@ -6,9 +6,7 @@ import Footer from '../../components/Footer'
 const index = () => {
   return (
     <>
-      <Navbar />
       <MintNFT />
-      <Footer />
     </>
   )
 }

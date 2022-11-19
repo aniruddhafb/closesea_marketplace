@@ -1,4 +1,4 @@
-import { React, useState, useRef, useEffect } from "react";
+import { React, useState, useRef, useEffect, createContext } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Web3Modal from "web3modal";
 import ethereumPng from "../assets/ethereum.png";
@@ -6,7 +6,8 @@ import polygon from "../assets/polygon.png";
 import binance from "../assets/binance.png";
 import Image from "next/image";
 import Link from "next/link";
-
+import { useContext } from "react";
+import SidebarContext from "../navContext";
 import {
   BellIcon,
   ShoppingCartIcon,
@@ -22,26 +23,25 @@ import {
 } from "@heroicons/react/24/solid";
 import { ethers } from "ethers";
 
+
 const Navbar = () => {
   const web3ModalRef = useRef();
   const [walletConnected, setWalletConnected] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [showNetworkPopup, setShowNetworkPopup] = useState(false);
+  const [openSideBar, setSideBar] = useState(false)
 
   const [userAddress, setUserAddress] = useState("");
   const [userBalance, setUserBalance] = useState("");
   const [chainIdMain, setChainIdMain] = useState(null);
+
+  const {setSidebarStatus} = useContext(SidebarContext)
 
   // on website load
   useEffect(() => {
     const walletStatus = localStorage.getItem("walletStatus");
     setWalletConnected(walletStatus);
     if (!walletConnected) connectWallet();
-
-    // window.ethereum.on("accountsChanged", function (userAddress) {
-    //   console.log({ userAddress });
-    //   window.location.reload(false);
-    // });
   }, [chainIdMain]);
 
   // login
@@ -344,8 +344,10 @@ const Navbar = () => {
       </>
     );
   };
+  
 
   return (
+
     <div>
       <div className="bg-[#0B0C0D] text-white h-[80px] flex items-center px-4 justify-between">
         {/* website logo area  */}
@@ -420,7 +422,7 @@ const Navbar = () => {
 
         {/* LAPTOP VIEW */}
         <div className="hidden lg:flex justify-between w-full space-x-10 items-center 2xl:text-3xl 2xl:space-x-14">
-          {/* searbar  */}
+          {/* searhbar  */}
           <div className="w-[50%] p-2 rounded-2xl bg-gray-800 border border-gray-600 outline-none flex space-x-3 items-center 2xl:p-3">
             <MagnifyingGlassIcon className="h-5 w-5 text-gray-300 2xl:h-6 2xl:w-8" />
             <input
@@ -475,7 +477,7 @@ const Navbar = () => {
           <MagnifyingGlassIcon className="h-6 w-6 ll:h-8 ll:w-8" />
           <BellIcon className="h-6 w-6 ll:h-8 ll:w-8" />
           <ShoppingCartIcon className="h-6 w-6 ll:h-8 ll:w-8" />
-          <Bars3Icon className="h-6 w-6 ll:h-8 ll:w-8" />
+          <Bars3Icon className="h-6 w-6 ll:h-8 ll:w-8"  onClick={() => setSidebarStatus(state => !state)}/>
         </div>
       </div>
     </div>
