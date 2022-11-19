@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import Image from "next/image";
 import ethereum from "../../assets/ethereum.png";
 import polygon from "../../assets/polygon.png";
@@ -9,9 +9,46 @@ import bored2 from "../../assets/bored2.webp";
 import bored3 from "../../assets/bored3.webp";
 import bored4 from "../../assets/bored4.webp";
 import Link from "next/link";
+
 const Firstsection = () => {
 
- return (
+  const [items, setItems] = useState([])
+
+  useEffect(() => {
+    getAllNFTs()
+  }, [])
+
+  const getAllNFTs = async () => {
+    try {
+      const ethers = require('ethers')
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner()
+      const contract = new ethers.Contract(Marketplace.address, Marketplace.abi, signer);
+      let transaction = await contract.getAllNFTs();
+      const items = await Promise.all(transaction.map(async i => {
+        const tokenURI = await contract.tokenURI(i.tokenId);
+        let meta = await axios.get(tokenURI)
+        meta = meta.data;
+        let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
+        let item = {
+          price,
+          tokenId: i.tokenId.toNumber(),
+          seller: i.seller,
+          owner: i.owner,
+          image: meta.image,
+          name: meta.name,
+          description: meta.description
+        }
+        return item
+      }))
+
+      console.log({ items })
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
+  return (
     <div className="flex flex-wrap justify-evenly items-center">
       <div className="text-white p-6 md:w-[500px]">
         <h1 className="text-[3rem] font-bold">
