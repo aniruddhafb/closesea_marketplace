@@ -8,16 +8,13 @@ import bored1 from "../../assets/bored1.webp";
 import bored2 from "../../assets/bored2.webp";
 import bored3 from "../../assets/bored3.webp";
 import bored4 from "../../assets/bored4.webp";
-<<<<<<< HEAD
 import Link from "next/link";
-=======
 import Marketplace from '../../Marketplace.json'
->>>>>>> e48258e3ebbddc09b8074a325b09935a13116ff8
 
 import { useEffect } from "react";
 import axios from "axios";
 const Firstsection = () => {
-  
+
   useEffect(() => {
     getAllNFTs()
 
@@ -29,12 +26,12 @@ const Firstsection = () => {
     const signer = provider.getSigner()
     const contract = new ethers.Contract(Marketplace.address, Marketplace.abi, signer);
     let transaction = await contract.getAllNFTs();
-    
+
     const tokens = await Promise.all(transaction.map(async i => {
       const tokenURI = await contract.tokenURI(i.tokenId);
-      console.log({tokenURI})
+      console.log({ tokenURI })
     }))
-    
+
   }
   return (
     <div className="flex flex-wrap justify-evenly items-center">
