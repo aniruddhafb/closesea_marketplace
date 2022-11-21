@@ -7,8 +7,6 @@ import axios from "axios";
 import NFT_Card from '../../components/NFT_Card';
 
 const mobileFilter = (setOpenFilter) => {
-    
-    //   const { title, content } = accordionData;
 
     const Accordion = ({title, content}) => {
         const [isActive, setIsActive] = useState(false)
@@ -16,25 +14,23 @@ const mobileFilter = (setOpenFilter) => {
         return <div>
             <div>
                 <div className={`${accordionStyle} my-3`}>
-                    <div className='text-white font-bold '>Sale Type</div>
-                    <ChevronDownIcon className='h-5 w-5'/>
+                    <div className='text-white font-bold '>{title}</div>
+                    <ChevronDownIcon className='h-5 w-5' onClick={() => setIsActive(!isActive)}/>
                 </div>
-                <div className='px-3 font-bold'>
-                    <h1>Buy Now</h1>
-                    <h1>Verified</h1>
-                </div>
+                {isActive && content()}
             </div>
             <div className='w-full px-3 my-2'><hr /></div>
-
         </div>
     }
-
     
     return <div className='bg-black h-full w-full text-white absolute z-10'>
         <div className='w-full flex justify-end px-3'><XMarkIcon className='h-5 w-5'/></div>
         <hr className='bg-white my-2'/>
         <div className='accordion'>
-            <Accordion />
+            <Accordion title={"Sale Type"} content={() => <div className='text-white font-bold text-sm px-3'>
+                <h1>Buy Now</h1>
+                <h1>Verfied</h1>
+            </div>}/>
         </div>
     </div>
 }
